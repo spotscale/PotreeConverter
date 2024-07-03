@@ -22,10 +22,9 @@ public:
 	static const PointAttribute NORMAL;
 
 	// For splat:
-	static const PointAttribute DC;
+	static const PointAttribute RGBA;
 	static const PointAttribute SCALE;
 	static const PointAttribute ROTATION;
-	static const PointAttribute OPACITY;
 
 	int ordinal;
 	string name;

@@ -23,13 +23,9 @@ public:
 	unsigned short pointSourceID = 0;
 
 	// For splat:
-	Vector3<float> dc{0};
+	unsigned char r = 0, g = 0, b = 0, a = 0;
 	Vector3<float> scale{0};
-	float rot0 = 0.0f;
-	float rot1 = 0.0f;
-	float rot2 = 0.0f;
-	float rot3 = 0.0f;
-	float opacity = 0.0f;
+	unsigned char rotx = 0, roty = 0, rotz = 0, rotw = 0;
 
 	Point() = default;
 

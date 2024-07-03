@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include <regex>
+#include <math.h>
 
 #include "Point.h"
 #include "PointReader.h"
@@ -22,6 +23,7 @@ namespace Potree{
 
 const int PLY_FILE_FORMAT_ASCII = 0;
 const int PLY_FILE_FORMAT_BINARY_LITTLE_ENDIAN = 1;
+const float SH_C0 = 0.28209479177387814f;
 
 struct PlyPropertyType{
 	string name;
@@ -342,18 +344,19 @@ public:
 		point.normal.z = nz;
 		
 		// For splat:
-		point.dc.x = dc0;
-		point.dc.y = dc1;
-		point.dc.z = dc2;
+		point.r = 255 * (0.5f + SH_C0 * dc0);
+		point.g = 255 * (0.5f + SH_C0 * dc1);
+		point.b = 255 * (0.5f + SH_C0 * dc2);
+		point.a = 255 * (1.0f / (1.0f + exp(-opacity)));
 		point.scale.x = scale0;
 		point.scale.y = scale1;
 		point.scale.z = scale2;
-		point.rot0 = rot0;
-		point.rot1 = rot1;
-		point.rot2 = rot2;
-		point.rot3 = rot3;
-		point.opacity = opacity;
-		
+		float rotLength = sqrtf(rot0 * rot0 + rot1 * rot1 + rot2 * rot2 + rot3 * rot3);
+		point.rotx = std::max<float>(std::min<float>(rot0 / rotLength * 128 + 128, 255), 0);
+		point.roty = std::max<float>(std::min<float>(rot1 / rotLength * 128 + 128, 255), 0);
+		point.rotz = std::max<float>(std::min<float>(rot2 / rotLength * 128 + 128, 255), 0);
+		point.rotw = std::max<float>(std::min<float>(rot3 / rotLength * 128 + 128, 255), 0);
+
 		pointsRead++;
 		return true;
 	}

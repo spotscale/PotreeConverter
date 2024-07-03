@@ -13,10 +13,9 @@ const PointAttribute PointAttribute::NORMAL_OCT16			= PointAttribute(5, "NORMAL_
 const PointAttribute PointAttribute::NORMAL					= PointAttribute(6, "NORMAL",				3, 12);
 
 // For splat:
-const PointAttribute PointAttribute::DC = PointAttribute(7, "DC", 3, 12);
+const PointAttribute PointAttribute::RGBA = PointAttribute(7, "RGBA", 4, 4);
 const PointAttribute PointAttribute::SCALE = PointAttribute(8, "SCALE", 3, 12);
 const PointAttribute PointAttribute::ROTATION = PointAttribute(9, "ROTATION", 4, 16);
-const PointAttribute PointAttribute::OPACITY = PointAttribute(10, "OPACITY", 1, 4);
 
 PointAttribute PointAttribute::fromString(string name){
 	if(name == "POSITION_CARTESIAN"){
@@ -36,17 +35,14 @@ PointAttribute PointAttribute::fromString(string name){
 	}
 	
 	// For splat:
-	else if (name == "DC") {
-		return PointAttribute::DC;
+	else if (name == "RGBA") {
+		return PointAttribute::RGBA;
 	}
 	else if(name == "SCALE"){
 		return PointAttribute::SCALE;
 	}
 	else if (name == "ROTATION") {
 		return PointAttribute::ROTATION;
-	}
-	else if (name == "OPACITY") {
-		return PointAttribute::OPACITY;
 	}
 
 	throw PotreeException("Invalid PointAttribute name: '" + name + "'");
@@ -70,17 +66,14 @@ string PointAttribute::toString(PointAttribute attr){
 	}
 	
 	// For splat:
-	else if (attr == PointAttribute::DC) {
-		return "DC";
+	else if (attr == PointAttribute::RGBA) {
+		return "RGBA";
 	}
 	else if (attr == PointAttribute::SCALE) {
 		return "SCALE";
 	}
 	else if (attr == PointAttribute::ROTATION) {
 		return "ROTATION";
-	}
-	else if (attr == PointAttribute::OPACITY) {
-		return "OPACITY";
 	}
 
 	throw PotreeException("Invalid PointAttribute");

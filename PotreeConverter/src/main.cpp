@@ -81,7 +81,7 @@ PotreeArguments parseArguments(int argc, char **argv){
 	args.addArgument("color-range", "");
 	args.addArgument("intensity-range", "");
 	args.addArgument("output-format", "Output format can be BINARY, LAS or LAZ. Default is BINARY");
-	args.addArgument("output-attributes,a", "can be any combination of RGB, INTENSITY and CLASSIFICATION (or DC, SCALE, ROTATION, OPACITY for splat). Default is RGB.");
+	args.addArgument("output-attributes,a", "can be any combination of RGB, INTENSITY and CLASSIFICATION (or RGBA, SCALE and ROTATION for splat). Default is RGB.");
 	args.addArgument("scale", "Scale of the X, Y, Z coordinate in LAS and LAZ files.");
 	args.addArgument("aabb", "Bounding cube as \"minX minY minZ maxX maxY maxZ\". If not provided it is automatically computed");
 	args.addArgument("incremental", "Add new points to existing conversion");
@@ -242,7 +242,7 @@ PotreeArguments parseArguments(int argc, char **argv){
    try {
     auto absolutePath = fs::canonical(fs::system_complete(argv[0]));
     a.executablePath = absolutePath.parent_path().string();
-   } catch (const fs::filesystem_error &e) {
+   } catch (const fs::filesystem_error &) {
      // do nothing
    }
 
@@ -279,8 +279,6 @@ void printArguments(PotreeArguments &a){
 
 
 int main(int argc, char **argv){
-	cout.imbue(std::locale(""));
-	
 	try{
 		PotreeArguments a = parseArguments(argc, argv);
 		printArguments(a);

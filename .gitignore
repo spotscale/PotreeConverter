@@ -22,3 +22,4 @@ PotreeConverter.dir/
 *.exe
 x64/
 cmake_install.cmake
+/PotreeConverter/*.user

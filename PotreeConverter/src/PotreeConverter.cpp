@@ -123,17 +123,14 @@ void PotreeConverter::prepare(){
 		}
 
 		// For splat:
-		else if (attribute == "DC") {
-			pointAttributes.add(PointAttribute::DC);
+		else if (attribute == "RGBA") {
+			pointAttributes.add(PointAttribute::RGBA);
 		}
 		else if (attribute == "SCALE") {
 			pointAttributes.add(PointAttribute::SCALE);
 		}
 		else if (attribute == "ROTATION") {
 			pointAttributes.add(PointAttribute::ROTATION);
-		}
-		else if (attribute == "OPACITY") {
-			pointAttributes.add(PointAttribute::OPACITY);
 		}
 	}
 }
