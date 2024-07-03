@@ -105,7 +105,7 @@ public:
 		pointCount = 0;
 		pointsRead = 0;
 		pointByteSize = 0;
-		buffer = new char[100];
+		buffer = new char[500]; // TODO: Generic size from header instead (only 100 before)
 		aabb = NULL;
 		this->file = file;
 
@@ -176,6 +176,19 @@ public:
 		unsigned char g = 0;
 		unsigned char b = 0;
 
+		// For splat:
+		float scale0 = 0.0f;
+		float scale1 = 0.0f;
+		float scale2 = 0.0f;
+		float dc0 = 0.0f;
+		float dc1 = 0.0f;
+		float dc2 = 0.0f;
+		float rot0 = 0.0f;
+		float rot1 = 0.0f;
+		float rot2 = 0.0f;
+		float rot3 = 0.0f;
+		float opacity = 0.0f;
+
 		if(format == PLY_FILE_FORMAT_ASCII){
 			string line;
 			getline(stream, line);
@@ -212,6 +225,42 @@ public:
 				}else if(prop.name == "nz" && prop.type.name == plyPropertyTypes["float"].name){
 					nz = stof(token);
 				}
+
+				// For splat
+				else if (prop.name == "f_dc_0" && prop.type.name == plyPropertyTypes["float"].name) {
+					dc0 = stof(token);
+				}
+				else if (prop.name == "f_dc_1" && prop.type.name == plyPropertyTypes["float"].name) {
+					dc1 = stof(token);
+				}
+				else if (prop.name == "f_dc_2" && prop.type.name == plyPropertyTypes["float"].name) {
+					dc2 = stof(token);
+				}
+				else if(prop.name == "scale_0" && prop.type.name == plyPropertyTypes["float"].name){
+					scale0 = stof(token);
+				}
+				else if (prop.name == "scale_1" && prop.type.name == plyPropertyTypes["float"].name) {
+					scale1 = stof(token);
+				}
+				else if (prop.name == "scale_2" && prop.type.name == plyPropertyTypes["float"].name) {
+					scale2 = stof(token);
+				}
+				else if (prop.name == "rot_0" && prop.type.name == plyPropertyTypes["float"].name) {
+					rot0 = stof(token);
+				}
+				else if (prop.name == "rot_1" && prop.type.name == plyPropertyTypes["float"].name) {
+					rot1 = stof(token);
+				}
+				else if (prop.name == "rot_2" && prop.type.name == plyPropertyTypes["float"].name) {
+					rot2 = stof(token);
+				}
+				else if (prop.name == "rot_3" && prop.type.name == plyPropertyTypes["float"].name) {
+					rot3 = stof(token);
+				}
+				else if (prop.name == "opacity" && prop.type.name == plyPropertyTypes["float"].name) {
+					opacity = stof(token);
+				}
+
 			}
 		}else if(format == PLY_FILE_FORMAT_BINARY_LITTLE_ENDIAN){
 			stream.read(buffer, pointByteSize);
@@ -246,7 +295,41 @@ public:
 				}else if(prop.name == "nz" && prop.type.name == plyPropertyTypes["float"].name){
 					memcpy(&nz, (buffer+offset), prop.type.size);
 				}
-				
+
+				// For splat
+				else if (prop.name == "f_dc_0" && prop.type.name == plyPropertyTypes["float"].name) {
+					memcpy(&dc0, (buffer + offset), prop.type.size);
+				}
+				else if (prop.name == "f_dc_1" && prop.type.name == plyPropertyTypes["float"].name) {
+					memcpy(&dc1, (buffer + offset), prop.type.size);
+				}
+				else if (prop.name == "f_dc_2" && prop.type.name == plyPropertyTypes["float"].name) {
+					memcpy(&dc2, (buffer + offset), prop.type.size);
+				}
+				else if (prop.name == "scale_0" && prop.type.name == plyPropertyTypes["float"].name) {
+					memcpy(&scale0, (buffer + offset), prop.type.size);
+				}
+				else if (prop.name == "scale_1" && prop.type.name == plyPropertyTypes["float"].name) {
+					memcpy(&scale1, (buffer + offset), prop.type.size);
+				}
+				else if (prop.name == "scale_2" && prop.type.name == plyPropertyTypes["float"].name) {
+					memcpy(&scale2, (buffer + offset), prop.type.size);
+				}
+				else if (prop.name == "rot_0" && prop.type.name == plyPropertyTypes["float"].name) {
+					memcpy(&rot0, (buffer + offset), prop.type.size);
+				}
+				else if (prop.name == "rot_1" && prop.type.name == plyPropertyTypes["float"].name) {
+					memcpy(&rot1, (buffer + offset), prop.type.size);
+				}
+				else if (prop.name == "rot_2" && prop.type.name == plyPropertyTypes["float"].name) {
+					memcpy(&rot2, (buffer + offset), prop.type.size);
+				}
+				else if (prop.name == "rot_3" && prop.type.name == plyPropertyTypes["float"].name) {
+					memcpy(&rot3, (buffer + offset), prop.type.size);
+				}
+				else if (prop.name == "opacity" && prop.type.name == plyPropertyTypes["float"].name) {
+					memcpy(&opacity, (buffer + offset), prop.type.size);
+				}
 
 				offset += prop.type.size;
 			}
@@ -257,6 +340,20 @@ public:
 		point.normal.x = nx;
 		point.normal.y = ny;
 		point.normal.z = nz;
+		
+		// For splat:
+		point.dc.x = dc0;
+		point.dc.y = dc1;
+		point.dc.z = dc2;
+		point.scale.x = scale0;
+		point.scale.y = scale1;
+		point.scale.z = scale2;
+		point.rot0 = rot0;
+		point.rot1 = rot1;
+		point.rot2 = rot2;
+		point.rot3 = rot3;
+		point.opacity = opacity;
+		
 		pointsRead++;
 		return true;
 	}

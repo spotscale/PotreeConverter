@@ -117,6 +117,35 @@ public:
 				writer->write((const char*)&point.normal.y, sizeof(float));
 				writer->write((const char*)&point.normal.z, sizeof(float));
 			}
+
+			// For splat:
+			else if (attribute == PointAttribute::DC) {
+				if (numPoints < 4)
+					std::cout << "DC: " << point.dc.x << ", " << point.dc.y << ", " << point.dc.z << std::endl;
+				writer->write((const char*)&point.dc.x, sizeof(float));
+				writer->write((const char*)&point.dc.y, sizeof(float));
+				writer->write((const char*)&point.dc.z, sizeof(float));
+			}
+			else if (attribute == PointAttribute::SCALE) {
+				if (numPoints < 4)
+					std::cout << "SCALE: " << point.scale.x << ", " << point.scale.y << ", " << point.scale.z << std::endl;
+				writer->write((const char*)&point.scale.x, sizeof(float));
+				writer->write((const char*)&point.scale.y, sizeof(float));
+				writer->write((const char*)&point.scale.z, sizeof(float));
+			}
+			else if (attribute == PointAttribute::ROTATION) {
+				if (numPoints < 4)
+					std::cout << "ROT: " << point.rot0 << ", " << point.rot1 << ", " << point.rot2 << ", " << point.rot3 << std::endl;
+				writer->write((const char*)&point.rot0, sizeof(float));
+				writer->write((const char*)&point.rot1, sizeof(float));
+				writer->write((const char*)&point.rot2, sizeof(float));
+				writer->write((const char*)&point.rot3, sizeof(float));
+			}
+			else if (attribute == PointAttribute::OPACITY) {
+				if (numPoints < 4)
+					std::cout << "OPACITY: " << point.opacity << std::endl;
+				writer->write((const char*)&point.opacity, sizeof(float));
+			}
 		}
 
 		numPoints++;

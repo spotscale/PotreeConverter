@@ -16,9 +16,9 @@
 #include "PointAttributes.hpp"
 #include "PointReader.h"
 #include "PointWriter.hpp"
-#include "LASPointReader.h"
+//#include "LASPointReader.h"
 #include "BINPointReader.hpp"
-#include "LASPointWriter.hpp"
+//#include "LASPointWriter.hpp"
 #include "BINPointWriter.hpp"
 #include "PotreeException.h"
 
@@ -96,9 +96,9 @@ string PWNode::path(){
 PointReader *PWNode::createReader(string path){
 	PointReader *reader = NULL;
 	OutputFormat outputFormat = this->potreeWriter->outputFormat;
-	if(outputFormat == OutputFormat::LAS || outputFormat == OutputFormat::LAZ){
+	/*if(outputFormat == OutputFormat::LAS || outputFormat == OutputFormat::LAZ){
 		reader = new LASPointReader(path);
-	}else if(outputFormat == OutputFormat::BINARY){
+	}else*/ if(outputFormat == OutputFormat::BINARY){
 		reader = new BINPointReader(path, aabb, potreeWriter->scale, this->potreeWriter->pointAttributes);
 	}
 
@@ -108,9 +108,9 @@ PointReader *PWNode::createReader(string path){
 PointWriter *PWNode::createWriter(string path){
 	PointWriter *writer = NULL;
 	OutputFormat outputFormat = this->potreeWriter->outputFormat;
-	if(outputFormat == OutputFormat::LAS || outputFormat == OutputFormat::LAZ){
+	/*if(outputFormat == OutputFormat::LAS || outputFormat == OutputFormat::LAZ){
 		writer = new LASPointWriter(path, aabb, potreeWriter->scale);
-	}else if(outputFormat == OutputFormat::BINARY){
+	}else*/ if(outputFormat == OutputFormat::BINARY){
 		writer = new BINPointWriter(path, aabb, potreeWriter->scale, this->potreeWriter->pointAttributes);
 	}
 
@@ -501,9 +501,9 @@ PotreeWriter::PotreeWriter(string workDir, AABB aabb, float spacing, int maxDept
 }
 
 string PotreeWriter::getExtension(){
-	if(outputFormat == OutputFormat::LAS){
+	/*if(outputFormat == OutputFormat::LAS){
 		return ".las";
-	}else if(outputFormat == OutputFormat::LAZ){
+	}else*/ if(outputFormat == OutputFormat::LAZ){
 		return ".laz";
 	}else if(outputFormat == OutputFormat::BINARY){
 		return ".bin";

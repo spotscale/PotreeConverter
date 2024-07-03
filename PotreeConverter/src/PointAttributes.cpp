@@ -12,6 +12,12 @@ const PointAttribute PointAttribute::NORMAL_SPHEREMAPPED	= PointAttribute(4, "NO
 const PointAttribute PointAttribute::NORMAL_OCT16			= PointAttribute(5, "NORMAL_OCT16",			2, 2);
 const PointAttribute PointAttribute::NORMAL					= PointAttribute(6, "NORMAL",				3, 12);
 
+// For splat:
+const PointAttribute PointAttribute::DC = PointAttribute(7, "DC", 3, 12);
+const PointAttribute PointAttribute::SCALE = PointAttribute(8, "SCALE", 3, 12);
+const PointAttribute PointAttribute::ROTATION = PointAttribute(9, "ROTATION", 4, 16);
+const PointAttribute PointAttribute::OPACITY = PointAttribute(10, "OPACITY", 1, 4);
+
 PointAttribute PointAttribute::fromString(string name){
 	if(name == "POSITION_CARTESIAN"){
 		return PointAttribute::POSITION_CARTESIAN;
@@ -28,8 +34,56 @@ PointAttribute PointAttribute::fromString(string name){
 	}else if(name == "NORMAL"){
 		return PointAttribute::NORMAL;
 	}
+	
+	// For splat:
+	else if (name == "DC") {
+		return PointAttribute::DC;
+	}
+	else if(name == "SCALE"){
+		return PointAttribute::SCALE;
+	}
+	else if (name == "ROTATION") {
+		return PointAttribute::ROTATION;
+	}
+	else if (name == "OPACITY") {
+		return PointAttribute::OPACITY;
+	}
 
 	throw PotreeException("Invalid PointAttribute name: '" + name + "'");
+}
+
+string PointAttribute::toString(PointAttribute attr){
+	if (attr == PointAttribute::POSITION_CARTESIAN){
+		return "POSITION_CARTESIAN";
+	}else if (attr == PointAttribute::COLOR_PACKED) {
+		return "COLOR_PACKED";
+	}else if (attr == PointAttribute::INTENSITY) {
+		return "INTENSITY";
+	}else if (attr == PointAttribute::CLASSIFICATION) {
+		return "CLASSIFICATION";
+	}else if (attr == PointAttribute::NORMAL_SPHEREMAPPED) {
+		return "NORMAL_SPHEREMAPPED";
+	}else if (attr == PointAttribute::NORMAL_OCT16) {
+		return "NORMAL_OCT16";
+	}else if (attr == PointAttribute::NORMAL) {
+		return "NORMAL";
+	}
+	
+	// For splat:
+	else if (attr == PointAttribute::DC) {
+		return "DC";
+	}
+	else if (attr == PointAttribute::SCALE) {
+		return "SCALE";
+	}
+	else if (attr == PointAttribute::ROTATION) {
+		return "ROTATION";
+	}
+	else if (attr == PointAttribute::OPACITY) {
+		return "OPACITY";
+	}
+
+	throw PotreeException("Invalid PointAttribute");
 }
 
 bool operator==(const PointAttribute& lhs, const PointAttribute& rhs){ 

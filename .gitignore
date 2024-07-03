@@ -10,3 +10,15 @@ build/*
 .idea
 *.orig
 test/converted
+.vs/
+*.vcxproj
+*.sln
+*.filters
+CMakeCache.txt
+CMakeFiles/
+PotreeConverter.dir/
+*.depend
+*.stamp
+*.exe
+x64/
+cmake_install.cmake

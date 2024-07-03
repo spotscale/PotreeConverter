@@ -21,6 +21,12 @@ public:
 	static const PointAttribute NORMAL_OCT16;
 	static const PointAttribute NORMAL;
 
+	// For splat:
+	static const PointAttribute DC;
+	static const PointAttribute SCALE;
+	static const PointAttribute ROTATION;
+	static const PointAttribute OPACITY;
+
 	int ordinal;
 	string name;
 	int numElements;
@@ -34,7 +40,7 @@ public:
 	}
 
 	static PointAttribute fromString(string name);
-
+	static string toString(PointAttribute attr);
 };
 
 bool operator==(const PointAttribute& lhs, const PointAttribute& rhs);

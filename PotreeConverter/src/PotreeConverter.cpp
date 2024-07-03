@@ -8,11 +8,11 @@
 
 #include "PotreeConverter.h"
 #include "stuff.h"
-#include "LASPointReader.h"
+//#include "LASPointReader.h"
 #include "PTXPointReader.h"
 #include "PotreeException.h"
 #include "PotreeWriter.h"
-#include "LASPointWriter.hpp"
+//#include "LASPointWriter.hpp"
 #include "BINPointWriter.hpp"
 #include "BINPointReader.hpp"
 #include "PlyPointReader.h"
@@ -51,9 +51,9 @@ namespace Potree{
 
 PointReader *PotreeConverter::createPointReader(string path, PointAttributes pointAttributes){
 	PointReader *reader = NULL;
-	if(iEndsWith(path, ".las") || iEndsWith(path, ".laz")){
+	/*if(iEndsWith(path, ".las") || iEndsWith(path, ".laz")){
 		reader = new LASPointReader(path);
-	}else if(iEndsWith(path, ".ptx")){
+	}else*/ if(iEndsWith(path, ".ptx")){
 		reader = new PTXPointReader(path);
 	}else if(iEndsWith(path, ".ply")){
 		reader = new PlyPointReader(path);
@@ -120,6 +120,20 @@ void PotreeConverter::prepare(){
 			pointAttributes.add(PointAttribute::CLASSIFICATION);
 		}else if(attribute == "NORMAL"){
 			pointAttributes.add(PointAttribute::NORMAL_OCT16);
+		}
+
+		// For splat:
+		else if (attribute == "DC") {
+			pointAttributes.add(PointAttribute::DC);
+		}
+		else if (attribute == "SCALE") {
+			pointAttributes.add(PointAttribute::SCALE);
+		}
+		else if (attribute == "ROTATION") {
+			pointAttributes.add(PointAttribute::ROTATION);
+		}
+		else if (attribute == "OPACITY") {
+			pointAttributes.add(PointAttribute::OPACITY);
 		}
 	}
 }
