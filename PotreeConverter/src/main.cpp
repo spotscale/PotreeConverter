@@ -63,7 +63,7 @@ struct PotreeArguments {
 	bool edlEnabled = false;
 	bool showSkybox = false;
 	string material = "RGB";
-    string executablePath;
+  string executablePath;
 };
 
 PotreeArguments parseArguments(int argc, char **argv){
@@ -81,7 +81,8 @@ PotreeArguments parseArguments(int argc, char **argv){
 	args.addArgument("color-range", "");
 	args.addArgument("intensity-range", "");
 	args.addArgument("output-format", "Output format can be BINARY, LAS or LAZ. Default is BINARY");
-	args.addArgument("output-attributes,a", "can be any combination of RGB, INTENSITY and CLASSIFICATION (or RGBA, SCALE and ROTATION for splat). Default is RGB.");
+	args.addArgument("output-attributes,a", "can be any combination of RGB, INTENSITY and CLASSIFICATION. Default is RGB. Overridden by splat.");
+	args.addArgument("splat", "Creates splat model, overrides output-attributes with RGBA, SCALE, ROTATION.");
 	args.addArgument("scale", "Scale of the X, Y, Z coordinate in LAS and LAZ files.");
 	args.addArgument("aabb", "Bounding cube as \"minX minY minZ maxX maxY maxZ\". If not provided it is automatically computed");
 	args.addArgument("incremental", "Add new points to existing conversion");
@@ -151,6 +152,10 @@ PotreeArguments parseArguments(int argc, char **argv){
 		a.outputAttributes = args.get("output-attributes").as<vector<string>>();
 	} else {
 		a.outputAttributes = { "RGB" };
+	}
+
+	if (args.has("splat")) {
+		a.outputAttributes = { "RGBA", "SCALE", "ROTATION" };
 	}
 
 	a.scale = args.get("scale").as<double>(0.0);
@@ -283,7 +288,7 @@ int main(int argc, char **argv){
 		PotreeArguments a = parseArguments(argc, argv);
 		printArguments(a);
 
-        PotreeConverter pc(a.executablePath, a.outdir, a.source);
+    PotreeConverter pc(a.executablePath, a.outdir, a.source);
 
 		pc.spacing = a.spacing;
 		pc.diagonalFraction = a.diagonalFraction;

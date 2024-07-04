@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <math.h>
 
 #include "AABB.h"
 #include "PointAttributes.hpp"
@@ -124,9 +125,10 @@ public:
 				writer->write((const char*)rgba, 4 * sizeof(unsigned char));
 			}
 			else if (attribute == PointAttribute::SCALE) {
-				writer->write((const char*)&point.scale.x, sizeof(float));
-				writer->write((const char*)&point.scale.y, sizeof(float));
-				writer->write((const char*)&point.scale.z, sizeof(float));
+				Vector3<float> expScale(exp(point.scale.x), exp(point.scale.y), exp(point.scale.z));
+				writer->write((const char*)&expScale.x, sizeof(float));
+				writer->write((const char*)&expScale.y, sizeof(float));
+				writer->write((const char*)&expScale.z, sizeof(float));
 			}
 			else if (attribute == PointAttribute::ROTATION) {
 				unsigned char rot[4] = { point.rotx, point.roty, point.rotz, point.rotw };

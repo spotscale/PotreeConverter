@@ -344,10 +344,11 @@ public:
 		point.normal.z = nz;
 		
 		// For splat:
-		point.r = 255 * (0.5f + SH_C0 * dc0);
-		point.g = 255 * (0.5f + SH_C0 * dc1);
-		point.b = 255 * (0.5f + SH_C0 * dc2);
-		point.a = 255 * (1.0f / (1.0f + exp(-opacity)));
+		point.r = 255 * std::max<float>(std::min<float>(0.5f + SH_C0 * dc0, 1.0f), 0.0f);
+		point.g = 255 * std::max<float>(std::min<float>(0.5f + SH_C0 * dc1, 1.0f), 0.0f);
+		point.b = 255 * std::max<float>(std::min<float>(0.5f + SH_C0 * dc2, 1.0f), 0.0f);
+		point.a = 255 * std::max<float>(std::min<float>(1.0f / (1.0f + exp(-opacity)), 1.0f), 0.0f);
+
 		point.scale.x = scale0;
 		point.scale.y = scale1;
 		point.scale.z = scale2;

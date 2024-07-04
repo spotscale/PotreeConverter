@@ -23,3 +23,5 @@ PotreeConverter.dir/
 x64/
 cmake_install.cmake
 /PotreeConverter/*.user
+/*.user
+/PotreeConverter/Debug/*.pdb
