@@ -308,6 +308,8 @@ void PWNode::flush(){
 			writer = createWriter(filepath);
 		}
 
+		// TODO SPLAT: Sort according to -exp(scale0 + scale1 + scale2) / (1 + exp(-opacity))
+
 		for(const auto &e_c : points){
 			writer->write(e_c);
 		}
