@@ -132,6 +132,11 @@ void PotreeConverter::prepare(){
 		else if (attribute == "ROTATION") {
 			pointAttributes.add(PointAttribute::ROTATION);
 		}
+
+		// For float value shader, e.g. GSD:
+		else if (attribute == "FLOAT_VALUE") {
+			pointAttributes.add(PointAttribute::FLOAT_VALUE);
+		}
 	}
 }
 

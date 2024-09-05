@@ -81,8 +81,9 @@ PotreeArguments parseArguments(int argc, char **argv){
 	args.addArgument("color-range", "");
 	args.addArgument("intensity-range", "");
 	args.addArgument("output-format", "Output format can be BINARY, LAS or LAZ. Default is BINARY");
-	args.addArgument("output-attributes,a", "can be any combination of RGB, INTENSITY and CLASSIFICATION. Default is RGB. Overridden by splat.");
+	args.addArgument("output-attributes,a", "can be any combination of RGB, INTENSITY and CLASSIFICATION. Default is RGB. Overridden by splat or gsd.");
 	args.addArgument("splat", "Creates splat model, overrides output-attributes with RGBA, SCALE, ROTATION.");
+	args.addArgument("gsd", "Creates GSD model, overrides output-attributes with FLOAT_VALUE.");
 	args.addArgument("scale", "Scale of the X, Y, Z coordinate in LAS and LAZ files.");
 	args.addArgument("aabb", "Bounding cube as \"minX minY minZ maxX maxY maxZ\". If not provided it is automatically computed");
 	args.addArgument("incremental", "Add new points to existing conversion");
@@ -156,6 +157,10 @@ PotreeArguments parseArguments(int argc, char **argv){
 
 	if (args.has("splat")) {
 		a.outputAttributes = { "RGBA", "SCALE", "ROTATION" };
+	}
+
+	if (args.has("gsd")) {
+		a.outputAttributes = { "FLOAT_VALUE" };
 	}
 
 	a.scale = args.get("scale").as<double>(0.0);

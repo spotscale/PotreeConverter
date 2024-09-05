@@ -26,6 +26,9 @@ public:
 	static const PointAttribute SCALE;
 	static const PointAttribute ROTATION;
 
+	// For float value shader, e.g. GSD:
+	static const PointAttribute FLOAT_VALUE;
+
 	int ordinal;
 	string name;
 	int numElements;

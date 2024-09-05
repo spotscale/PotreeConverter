@@ -190,6 +190,9 @@ public:
 		float rot2 = 0.0f;
 		float rot3 = 0.0f;
 		float opacity = 0.0f;
+		
+		// For float value shader, e.g. GSD:
+		float floatValue = 0.0f;
 
 		if(format == PLY_FILE_FORMAT_ASCII){
 			string line;
@@ -263,6 +266,11 @@ public:
 					opacity = stof(token);
 				}
 
+				// For GSD as float value shader:
+				else if (prop.name == "gsd" && prop.type.name == plyPropertyTypes["double"].name) {
+					floatValue = static_cast<float>(stod(token));
+				}
+
 			}
 		}else if(format == PLY_FILE_FORMAT_BINARY_LITTLE_ENDIAN){
 			stream.read(buffer, pointByteSize);
@@ -333,6 +341,13 @@ public:
 					memcpy(&opacity, (buffer + offset), prop.type.size);
 				}
 
+				// For GSD as float value shader:
+				else if (prop.name == "gsd" && prop.type.name == plyPropertyTypes["double"].name) {
+					double gsd;
+					memcpy(&gsd, (buffer + offset), prop.type.size);
+					floatValue = static_cast<float>(gsd);
+				}
+
 				offset += prop.type.size;
 			}
 			
@@ -348,6 +363,9 @@ public:
 		point.g = 255 * std::max<float>(std::min<float>(0.5f + SH_C0 * dc1, 1.0f), 0.0f);
 		point.b = 255 * std::max<float>(std::min<float>(0.5f + SH_C0 * dc2, 1.0f), 0.0f);
 		point.a = 255 * std::max<float>(std::min<float>(1.0f / (1.0f + exp(-opacity)), 1.0f), 0.0f);
+
+		// For float value shader, e.g. GSD:
+		point.floatValue = static_cast<float>(floatValue);
 
 		point.scale.x = scale0;
 		point.scale.y = scale1;

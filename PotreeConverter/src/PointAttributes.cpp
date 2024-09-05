@@ -17,6 +17,9 @@ const PointAttribute PointAttribute::RGBA = PointAttribute(7, "RGBA", 4, 4);
 const PointAttribute PointAttribute::SCALE = PointAttribute(8, "SCALE", 3, 12);
 const PointAttribute PointAttribute::ROTATION = PointAttribute(9, "ROTATION", 4, 16);
 
+// For float value shader, e.g. GSD:
+const PointAttribute PointAttribute::FLOAT_VALUE = PointAttribute(10, "FLOAT_VALUE", 1, 4);
+
 PointAttribute PointAttribute::fromString(string name){
 	if(name == "POSITION_CARTESIAN"){
 		return PointAttribute::POSITION_CARTESIAN;
@@ -43,6 +46,11 @@ PointAttribute PointAttribute::fromString(string name){
 	}
 	else if (name == "ROTATION") {
 		return PointAttribute::ROTATION;
+	}
+
+	// For float value shader, e.g. GSD:
+	else if (name == "FLOAT_VALUE") {
+		return PointAttribute::FLOAT_VALUE;
 	}
 
 	throw PotreeException("Invalid PointAttribute name: '" + name + "'");
@@ -74,6 +82,11 @@ string PointAttribute::toString(PointAttribute attr){
 	}
 	else if (attr == PointAttribute::ROTATION) {
 		return "ROTATION";
+	}
+
+	// For float value shader, e.g. GSD:
+	else if (attr == PointAttribute::FLOAT_VALUE) {
+		return "FLOAT_VALUE";
 	}
 
 	throw PotreeException("Invalid PointAttribute");

@@ -134,6 +134,11 @@ public:
 				unsigned char rot[4] = { point.rotx, point.roty, point.rotz, point.rotw };
 				writer->write((const char*)rot, 4 * sizeof(unsigned char));
 			}
+
+			// For float value shader, e.g. GSD:
+			else if (attribute == PointAttribute::FLOAT_VALUE) {
+				writer->write((const char*)&point.floatValue, sizeof(float));
+			}
 		}
 
 		numPoints++;

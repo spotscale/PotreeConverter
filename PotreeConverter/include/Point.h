@@ -27,6 +27,9 @@ public:
 	Vector3<float> scale{0};
 	unsigned char rotx = 0, roty = 0, rotz = 0, rotw = 0;
 
+	// For float value shader, e.g. GSD:
+	float floatValue;
+
 	Point() = default;
 
 	Point(double x, double y, double z) :
