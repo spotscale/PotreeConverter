@@ -266,9 +266,12 @@ public:
 					opacity = stof(token);
 				}
 
-				// For GSD as float value shader:
+				// For GSD as float value shader (from double or float):
 				else if (prop.name == "gsd" && prop.type.name == plyPropertyTypes["double"].name) {
 					floatValue = static_cast<float>(stod(token));
+				}
+				else if (prop.name == "gsd" && prop.type.name == plyPropertyTypes["float"].name) {
+					floatValue = static_cast<float>(stof(token));
 				}
 
 			}
@@ -341,11 +344,16 @@ public:
 					memcpy(&opacity, (buffer + offset), prop.type.size);
 				}
 
-				// For GSD as float value shader:
+				// For GSD as float value shader (from double or float):
 				else if (prop.name == "gsd" && prop.type.name == plyPropertyTypes["double"].name) {
 					double gsd;
 					memcpy(&gsd, (buffer + offset), prop.type.size);
 					floatValue = static_cast<float>(gsd);
+				}
+				else if (prop.name == "gsd" && prop.type.name == plyPropertyTypes["float"].name) {
+					float gsd;
+					memcpy(&gsd, (buffer + offset), prop.type.size);
+					floatValue = gsd;
 				}
 
 				offset += prop.type.size;
