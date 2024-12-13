@@ -38,3 +38,5 @@ if(UNIX)
 endif()
 
 install(TARGETS PotreeConverter RUNTIME DESTINATION bin/ )
+
+add_definitions(-D_SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING)
